@@ -1,0 +1,51 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <title>트위치 자기부검</title>
+  <meta name="description" content="본인의 채팅을 확인합니다.">
+  <link rel="canonical" href="https://mychat.twitchgg.tv/">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css" integrity="sha384-B0vP5xmATw1+K9KRQjQERJvTumQW0nPEzvF6L/Z6nronJ3oUOFUFpCjEUQouq2+l" crossorigin="anonymous">
+</head>
+<body>
+  <div class="container py-3">
+    <div class="row justify-content-center">
+      <video src="./video.mp4" class="img-fluid" autoplay loop muted></video>
+    </div>
+    <hr class="my-3">
+    <h4>1. 메뉴 > 북마크 > '북마크바 표시'를 활성화합니다.</h4>
+    <h4>2. 아래 버튼을 북마크바로 드래그하여 즐겨찾기로 추가합니다.</h4>
+    <div class="my-2">
+      <a class="btn btn-outline-primary" href="javascript:(function(){window._fetch=window._fetch??fetch;const channel=prompt('채널명을 입력하세요');fetch=async function(a, b){if(a.startsWith('https://gql.twitch.tv/gql')){const body=JSON.parse(b.body);const modified=[];let senderID;for(let i=0;i<body.length;i++){if(body[i].operationName==='ViewerCardModLogsMessagesBySender'){body[i].variables.channelLogin=channel;modified.push(i);senderID=body[i].variables.senderID;}}b.body=JSON.stringify(body);if(modified.length){const res=await _fetch(...arguments);const result=await res.json();for (const i of modified)result[i].data.channel.id=senderID;return _fetch(`data:application/json;base64,${btoa(unescape(encodeURIComponent(JSON.stringify(result))))}`,b);}}return _fetch(...arguments);}})();" role="button">트위치 자기부검</a> ← 이 버튼을 북마크바로 드래그 하세요.
+    </div>
+    <h4>3. 다음 주소에 접속합니다. 본인의 Twitch 아이디를 입력한 후 Go를 클릭하면 바로 갈 수 있습니다.</h4>
+    <div class="input-group my-2 user-select-all">
+      <div class="input-group-prepend">
+        <span class="input-group-text">https://www.twitch.tv/popout/</span>
+      </div>
+      <input type="text" class="form-control" id="twitch-id-input" aria-label="본인 Twitch 아이디" placeholder="본인 Twitch 아이디">
+      <div class="input-group-append">
+        <span class="input-group-text">/viewercard/<span id="twitch-id" class="font-weight-bold">[본인 Twitch 아이디]</span></span>
+        <a href="https://www.twitch.tv/popout/_/viewercard/_" id="go" class="btn btn-outline-secondary" target="_blank" rel="noreferrer noopener">Go</a>
+      </div>
+    </div>
+    <h4>4. 해당 북마크를 클릭한 후 채널명을 입력합니다.</h4>
+    <h4>5. '임시 차단' 등 다른 탭을 클릭한 후 다시 '메시지' 탭을 클릭합니다.</h4>
+    <p>본 서비스는 트위치와 관련이 없으며 트위치 등은 각각 해당 소유자의 등록된 상표입니다. 본 서비스는 트위치의 공개되지 않은 API를 사용하며, 이에 예고없이 서비스가 중단될 수 있고 서비스를 사용하여 발생하는 결과에 대한 모든 책임은 본인에게 있습니다.</p>
+  </div>
+  <script>
+    const twitchIdInput = document.getElementById('twitch-id-input');
+    const twitchId = document.getElementById('twitch-id');
+    const go = document.getElementById('go');
+    twitchIdInput.addEventListener('input', (e) => {
+      const value = e.target.value;
+      twitchId.textContent = value || '[Your Twitch ID]'
+      go.href = `https://www.twitch.tv/popout/${value || '_'}/viewercard/${value || '_'}`
+    });
+    twitchIdInput.addEventListener('keyup', (e) => {
+      if (e.key === 'Enter') go.click();
+    });
+  </script>
+</body>
+</html>
