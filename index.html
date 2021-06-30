@@ -40,7 +40,7 @@
     const go = document.getElementById('go');
     twitchIdInput.addEventListener('input', (e) => {
       const value = e.target.value;
-      twitchId.textContent = value || '[Your Twitch ID]'
+      twitchId.textContent = value || '[본인 Twitch 아이디]'
       go.href = `https://www.twitch.tv/popout/${value || '_'}/viewercard/${value || '_'}`
     });
     twitchIdInput.addEventListener('keyup', (e) => {
