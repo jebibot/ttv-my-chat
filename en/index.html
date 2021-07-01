@@ -1,0 +1,62 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <title>Twitch MyChat</title>
+  <meta name="description" content="View my Twitch chat history.">
+  <link rel="canonical" href="https://mychat.twitchgg.tv/en/">
+  <link rel="alternate" hreflang="ko" href="https://mychat.twitchgg.tv/" />
+  <link rel="alternate" hreflang="en" href="https://mychat.twitchgg.tv/en/" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css" integrity="sha384-B0vP5xmATw1+K9KRQjQERJvTumQW0nPEzvF6L/Z6nronJ3oUOFUFpCjEUQouq2+l" crossorigin="anonymous">
+</head>
+<body>
+  <nav class="navbar navbar-light bg-light">
+    <span class="navbar-brand">
+      Twitch MyChat
+      <small class="text-muted d-none d-sm-inline">View my Twitch chat history.</small>
+    </span>
+    <span class="navbar-text">
+      <a href="../index.html" lang="ko">🇰🇷 한국어</a>
+    </span>
+  </nav>
+  <div class="container py-3">
+    <div class="row justify-content-center overflow-hidden">
+      <video src="video.mp4" class="img-fluid" autoplay loop muted></video>
+    </div>
+    <hr class="my-3">
+    <h4>1. Enable 'Show bookmarks bar' in Menu > Bookmarks.</h4>
+    <h4>2. Add the bookmarklet by dragging the button below to the bookmarks bar.</h4>
+    <div class="my-2">
+      <a class="btn btn-outline-primary" href="javascript:(function(){window._fetch=window._fetch??fetch;const channel=prompt('Enter the channel name');fetch=async function(a, b){if(a.startsWith('https://gql.twitch.tv/gql')){const body=JSON.parse(b.body);const modified=[];let senderID;for(let i=0;i<body.length;i++){if(body[i].operationName==='ViewerCardModLogsMessagesBySender'){body[i].variables.channelLogin=channel;modified.push(i);senderID=body[i].variables.senderID;}}b.body=JSON.stringify(body);if(modified.length){const res=await _fetch(...arguments);const result=await res.json();for (const i of modified)result[i].data.channel.id=senderID;return _fetch(`data:application/json;base64,${btoa(unescape(encodeURIComponent(JSON.stringify(result))))}`,b);}}return _fetch(...arguments);}})();" role="button">Twitch MyChat</a> ← Drag this button to the bookmarks bar.
+    </div>
+    <h4>3. Go to the following address. Enter your Twitch ID and click Go.</h4>
+    <div class="input-group my-2 user-select-all">
+      <div class="input-group-prepend">
+        <span class="input-group-text">https://www.twitch.tv/popout/</span>
+      </div>
+      <input type="text" class="form-control" id="twitch-id-input" aria-label="Your Twitch ID" placeholder="Your Twitch ID">
+      <div class="input-group-append">
+        <span class="input-group-text">/viewercard/<span id="twitch-id" class="font-weight-bold">[Your Twitch ID]</span></span>
+        <a href="https://www.twitch.tv/popout/_/viewercard/_" id="go" class="btn btn-outline-secondary" target="_blank" rel="noreferrer noopener">Go</a>
+      </div>
+    </div>
+    <h4>4. Click the bookmarklet and enter the channel name.</h4>
+    <h4>5. Click another tab such as 'Timeouts' and then click the 'Messages' tab again.</h4>
+    <p>This service is not affiliated, associated, authorized, endorsed by, or in any way officially connected with Twitch. The name Twitch, as well as related names, are the registered trademarks of their respective owners. This service uses an undisclosed API of Twitch, as such, the service may be discontinued without notice and use at your own risk.</p>
+  </div>
+  <script>
+    const twitchIdInput = document.getElementById('twitch-id-input');
+    const twitchId = document.getElementById('twitch-id');
+    const go = document.getElementById('go');
+    twitchIdInput.addEventListener('input', (e) => {
+      const value = e.target.value;
+      twitchId.textContent = value || '[Your Twitch ID]';
+      go.href = `https://www.twitch.tv/popout/${value || '_'}/viewercard/${value || '_'}`;
+    });
+    twitchIdInput.addEventListener('keyup', (e) => {
+      if (e.key === 'Enter') go.click();
+    });
+  </script>
+</body>
+</html>
