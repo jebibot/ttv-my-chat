@@ -28,16 +28,16 @@
     <h4>1. Enable 'Show bookmarks bar' in Menu > Bookmarks.</h4>
     <h4>2. Add the bookmarklet by dragging the button below to the bookmarks bar.</h4>
     <div class="my-2">
-      <a class="btn btn-outline-primary" href="javascript:(function(){const tabs=document.getElementsByClassName('viewer-card-mod-drawer-tab');tabs[1]?.getElementsByTagName('a')[0]?.click();window._fetch=window._fetch??fetch;const channel=prompt('Enter the channel name');fetch=async function(a, b){if(a.startsWith('https://gql.twitch.tv/gql')){const body=JSON.parse(b.body);const modified=[];let senderID;for(let i=0;i<body.length;i++){if(body[i].operationName==='ViewerCardModLogsMessagesBySender'){body[i].variables.channelLogin=channel;modified.push(i);senderID=body[i].variables.senderID;}}b.body=JSON.stringify(body);if(modified.length){const res=await _fetch(...arguments);const result=await res.json();for (const i of modified)result[i].data.channel.id=senderID;return _fetch(`data:application/json;base64,${btoa(unescape(encodeURIComponent(JSON.stringify(result))))}`,b);}}return _fetch(...arguments);};tabs[0]?.getElementsByTagName('a')[0]?.click();})();" role="button">Twitch MyChat</a> ← Drag this button to the bookmarks bar.
+      <a class="btn btn-outline-primary" href="javascript:(function(){if(!location.href.startsWith('https://www.twitch.tv/popout/')){const id=prompt('Enter your username');location.href=`https://www.twitch.tv/popout/${id}/viewercard/${id}`;return;}const tabs=document.getElementsByClassName('viewer-card-mod-drawer-tab');tabs[1]?.getElementsByTagName('a')[0]?.click();window._fetch=window._fetch??fetch;const channel=prompt('Enter the channel name');fetch=async function(a, b){if(a.startsWith('https://gql.twitch.tv/gql')){const body=JSON.parse(b.body);const modified=[];let senderID;for(let i=0;i<body.length;i++){if(body[i].operationName==='ViewerCardModLogsMessagesBySender'){body[i].variables.channelLogin=channel;modified.push(i);senderID=body[i].variables.senderID;}}b.body=JSON.stringify(body);if(modified.length){const res=await _fetch(...arguments);const result=await res.json();for (const i of modified)result[i].data.channel.id=senderID;return _fetch(`data:application/json;base64,${btoa(unescape(encodeURIComponent(JSON.stringify(result))))}`,b);}}return _fetch(...arguments);};tabs[0]?.getElementsByTagName('a')[0]?.click();})();" role="button">Twitch MyChat</a> ← Drag this button to the bookmarks bar.
     </div>
-    <h4>3. Go to the following address. Enter your Twitch ID and click Go.</h4>
+    <h4>3. Go to the following address. Enter your Twitch Username and click Go.</h4>
     <div class="input-group my-2 user-select-all">
       <div class="input-group-prepend">
         <span class="input-group-text">https://www.twitch.tv/popout/</span>
       </div>
-      <input type="text" class="form-control" id="twitch-id-input" aria-label="Your Twitch ID" placeholder="Your Twitch ID">
+      <input type="text" class="form-control" id="twitch-id-input" aria-label="Your Twitch Username" placeholder="Your Twitch ID">
       <div class="input-group-append">
-        <span class="input-group-text">/viewercard/<span id="twitch-id" class="font-weight-bold">[Your Twitch ID]</span></span>
+        <span class="input-group-text">/viewercard/<span id="twitch-id" class="font-weight-bold">[Your Twitch Username]</span></span>
         <a href="https://www.twitch.tv/popout/_/viewercard/_" id="go" class="btn btn-outline-secondary" target="_blank" rel="noreferrer noopener">Go</a>
       </div>
     </div>
@@ -50,7 +50,7 @@
     const go = document.getElementById('go');
     twitchIdInput.addEventListener('input', (e) => {
       const value = e.target.value;
-      twitchId.textContent = value || '[Your Twitch ID]';
+      twitchId.textContent = value || '[Your Twitch Username]';
       go.href = `https://www.twitch.tv/popout/${value || '_'}/viewercard/${value || '_'}`;
     });
     twitchIdInput.addEventListener('keyup', (e) => {
