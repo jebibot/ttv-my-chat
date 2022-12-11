@@ -1,2 +1,2 @@
-# twitch-my-chat
+# ttv-my-chat
 View my Twitch chat history
