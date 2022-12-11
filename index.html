@@ -26,11 +26,11 @@
     </div>
     <hr class="my-3">
     <h4>1. 메뉴 > 북마크 > '북마크바 표시'를 활성화합니다.</h4>
-    <h4>2. 아래 버튼을 북마크바로 드래그하여 즐겨찾기로 추가합니다.</h4>
+    <h4>2. 아래 버튼을 북마크바로 드래그하여 북마크로 추가합니다.</h4>
     <div class="my-2">
       <a class="btn btn-outline-primary" href="javascript:(function(){if(!location.href.startsWith('https://www.twitch.tv/popout/')){const id=prompt('아이디를 입력하세요');location.href=`https://www.twitch.tv/popout/${id}/viewercard/${id}`;return;}const tabs=document.getElementsByClassName('viewer-card-mod-drawer-tab');tabs[1]?.getElementsByTagName('a')[0]?.click();window._fetch=window._fetch??fetch;const channel=prompt('채널명을 입력하세요');fetch=async function(a, b){if(a.startsWith('https://gql.twitch.tv/gql')){const body=JSON.parse(b.body);const modified=[];let senderID;for(let i=0;i<body.length;i++){if(body[i].operationName==='ViewerCardModLogsMessagesBySender'){body[i].variables.channelLogin=channel;modified.push(i);senderID=body[i].variables.senderID;}}b.body=JSON.stringify(body);if(modified.length){const res=await _fetch(...arguments);const result=await res.json();for (const i of modified)result[i].data.channel.id=senderID;return _fetch(`data:application/json;base64,${btoa(unescape(encodeURIComponent(JSON.stringify(result))))}`,b);}}return _fetch(...arguments);};tabs[0]?.getElementsByTagName('a')[0]?.click();})();" role="button">트위치 자기부검</a> ← 이 버튼을 북마크바로 드래그 하세요.
     </div>
-    <h4>3. 다음 주소에 접속합니다. 즐겨찾기를 클릭하거나 아래에 본인의 Twitch 아이디를 입력한 후 Go를 클릭하면 바로 갈 수 있습니다.</h4>
+    <h4>3. 다음 주소에 접속합니다. 북마크를 클릭하거나 아래에 본인의 Twitch 아이디를 입력한 후 Go를 클릭하면 바로 갈 수 있습니다.</h4>
     <div class="input-group my-2 user-select-all">
       <div class="input-group-prepend">
         <span class="input-group-text">https://www.twitch.tv/popout/</span>
@@ -41,7 +41,7 @@
         <a href="https://www.twitch.tv/popout/_/viewercard/_" id="go" class="btn btn-outline-secondary" target="_blank" rel="noreferrer noopener">Go</a>
       </div>
     </div>
-    <h4>4. 해당 북마크를 클릭한 후 채널명을 입력합니다.</h4>
+    <h4>4. 북마크를 클릭한 후 채널명을 입력합니다.</h4>
     <p>본 서비스는 트위치와 관련이 없으며 트위치 등은 각각 해당 소유자의 등록된 상표입니다. 본 서비스는 트위치의 공개되지 않은 API를 사용하며, 이에 예고없이 서비스가 중단될 수 있고 서비스를 사용하여 발생하는 결과에 대한 모든 책임은 본인에게 있습니다.</p>
   </div>
   <script>
